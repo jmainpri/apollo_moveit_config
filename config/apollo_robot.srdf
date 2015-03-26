@@ -1,0 +1,573 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="apollo_robot">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="left_arm">
+        <joint name="L_SFE" />
+        <joint name="L_SAA" />
+        <joint name="L_HR" />
+        <joint name="L_EB" />
+        <joint name="L_WR" />
+        <joint name="L_WFE" />
+        <joint name="L_WAA" />
+    </group>
+    <group name="right_arm">
+        <joint name="R_SFE" />
+        <joint name="R_SAA" />
+        <joint name="R_HR" />
+        <joint name="R_EB" />
+        <joint name="R_WR" />
+        <joint name="R_WFE" />
+        <joint name="R_WAA" />
+    </group>
+    <group name="right_gripper">
+        <joint name="R_Arm_PalmBlueComponentJoint" />
+        <joint name="R_Arm_ForceTorqueJoint" />
+        <joint name="R_Arm_PalmJoint" />
+        <joint name="R_Arm_ToolJoint" />
+        <joint name="R_FR" />
+        <joint name="R_LF" />
+        <joint name="R_LF2" />
+        <joint name="R_LF3" />
+        <joint name="R_FR2" />
+        <joint name="R_RF" />
+        <joint name="R_RF2" />
+        <joint name="R_RF3" />
+        <joint name="R_MF" />
+        <joint name="R_MF2" />
+        <joint name="R_MF3" />
+    </group>
+    <group name="left_gripper">
+        <joint name="L_Arm_PalmBlueComponentJoint" />
+        <joint name="L_Arm_ForceTorqueJoint" />
+        <joint name="L_Arm_PalmJoint" />
+        <joint name="L_Arm_ToolJoint" />
+        <joint name="L_FR" />
+        <joint name="L_LF" />
+        <joint name="L_LF2" />
+        <joint name="L_LF3" />
+        <joint name="L_FR2" />
+        <joint name="L_RF" />
+        <joint name="L_RF2" />
+        <joint name="L_RF3" />
+        <joint name="L_MF" />
+        <joint name="L_MF2" />
+        <joint name="L_MF3" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="rest" group="right_arm">
+        <joint name="R_EB" value="1.5499" />
+        <joint name="R_HR" value="-0.0998" />
+        <joint name="R_SAA" value="-0.1506" />
+        <joint name="R_SFE" value="-0.5654" />
+        <joint name="R_WAA" value="0" />
+        <joint name="R_WFE" value="0" />
+        <joint name="R_WR" value="-0.275" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="left_eef" parent_link="L_LOWER_WRIST" group="left_gripper" parent_group="left_arm" />
+    <end_effector name="right_eef" parent_link="R_LOWER_WRIST" group="right_gripper" parent_group="right_arm" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="BASE" link2="B_CERVICALS" reason="Never" />
+    <disable_collisions link1="BASE" link2="B_HEAD" reason="Adjacent" />
+    <disable_collisions link1="BASE" link2="B_MOTORS" reason="Adjacent" />
+    <disable_collisions link1="BASE" link2="L_COLLARBONE" reason="Adjacent" />
+    <disable_collisions link1="BASE" link2="L_EYE" reason="Never" />
+    <disable_collisions link1="BASE" link2="L_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="BASE" link2="L_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="BASE" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="BASE" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="BASE" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="BASE" link2="R_COLLARBONE" reason="Adjacent" />
+    <disable_collisions link1="BASE" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="BASE" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="BASE" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="BASE" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="BASE" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="BASE" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="B_HEAD" reason="Default" />
+    <disable_collisions link1="B_CERVICALS" link2="B_MOTORS" reason="Adjacent" />
+    <disable_collisions link1="B_CERVICALS" link2="L_COLLARBONE" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_EYE" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_FOREARM" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="B_CERVICALS" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="B_MOTORS" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="L_COLLARBONE" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="L_EYE" reason="Adjacent" />
+    <disable_collisions link1="B_HEAD" link2="L_EYE_LOWER" reason="Default" />
+    <disable_collisions link1="B_HEAD" link2="L_EYE_UPPER" reason="Default" />
+    <disable_collisions link1="B_HEAD" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="R_EYE" reason="Adjacent" />
+    <disable_collisions link1="B_HEAD" link2="R_EYE_LOWER" reason="Default" />
+    <disable_collisions link1="B_HEAD" link2="R_EYE_UPPER" reason="Default" />
+    <disable_collisions link1="B_HEAD" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="B_HEAD" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_COLLARBONE" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_EYE" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="B_MOTORS" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_FOREARM" reason="Never" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_HAND_L_FINGER_KNUCKLE_1" reason="Adjacent" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_HAND_M_FINGER_KNUCKLE_2" reason="Adjacent" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Adjacent" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_LOWER_WRIST" reason="Adjacent" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_ARM_PALM" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_EYE" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_FOREARM" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_SHOULDER" reason="Adjacent" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_COLLARBONE" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="L_EYE_LOWER" reason="Adjacent" />
+    <disable_collisions link1="L_EYE" link2="L_EYE_UPPER" reason="Adjacent" />
+    <disable_collisions link1="L_EYE" link2="L_FOREARM" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_EYE" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_FOREARM" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_ARM_PALM" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_EYE_LOWER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_FOREARM" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_EYE_UPPER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_UPPER_ARM" reason="Adjacent" />
+    <disable_collisions link1="L_FOREARM" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="L_UPPER_WRIST_YAW" reason="Adjacent" />
+    <disable_collisions link1="L_FOREARM" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_FOREARM" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_L_FINGER_KNUCKLE_2" reason="Adjacent" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="R_ARM_PALM" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_1" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_HAND_L_FINGER_KNUCKLE_3" reason="Adjacent" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_2" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_L_FINGER_KNUCKLE_3" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_HAND_M_FINGER_KNUCKLE_3" reason="Adjacent" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_2" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="L_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_HAND_R_FINGER_KNUCKLE_2" reason="Adjacent" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="R_ARM_PALM" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_HAND_R_FINGER_KNUCKLE_3" reason="Adjacent" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_2" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="L_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_HAND_R_FINGER_KNUCKLE_3" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="L_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="L_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="L_UPPER_WRIST_PITCH" reason="Adjacent" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_LOWER_WRIST" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="L_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="L_UPPER_ARM_IN_SHOULDER" reason="Adjacent" />
+    <disable_collisions link1="L_SHOULDER" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_SHOULDER" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="L_UPPER_ARM_IN_SHOULDER" reason="Adjacent" />
+    <disable_collisions link1="L_UPPER_ARM" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="L_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="L_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="L_UPPER_ARM_IN_SHOULDER" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="L_UPPER_WRIST_PITCH" link2="L_UPPER_WRIST_YAW" reason="Adjacent" />
+    <disable_collisions link1="L_UPPER_WRIST_PITCH" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_UPPER_WRIST_PITCH" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_WRIST_PITCH" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_WRIST_YAW" link2="R_COLLARBONE" reason="Never" />
+    <disable_collisions link1="L_UPPER_WRIST_YAW" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="L_UPPER_WRIST_YAW" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Adjacent" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Adjacent" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Adjacent" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_LOWER_WRIST" reason="Adjacent" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_ARM_PALM" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_EYE" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_EYE_LOWER" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_SHOULDER" reason="Adjacent" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_COLLARBONE" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_EYE" link2="R_EYE_LOWER" reason="Adjacent" />
+    <disable_collisions link1="R_EYE" link2="R_EYE_UPPER" reason="Adjacent" />
+    <disable_collisions link1="R_EYE" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_EYE" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_EYE" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_EYE_UPPER" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_EYE_LOWER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_FOREARM" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_EYE_UPPER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_L_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_UPPER_ARM" reason="Adjacent" />
+    <disable_collisions link1="R_FOREARM" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_FOREARM" link2="R_UPPER_WRIST_YAW" reason="Adjacent" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_L_FINGER_KNUCKLE_2" reason="Adjacent" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_1" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_L_FINGER_KNUCKLE_3" reason="Adjacent" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_M_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_2" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_L_FINGER_KNUCKLE_3" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_HAND_M_FINGER_KNUCKLE_3" reason="Adjacent" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_2" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_HAND_R_FINGER_KNUCKLE_1" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_M_FINGER_KNUCKLE_3" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_2" reason="Adjacent" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_1" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_HAND_R_FINGER_KNUCKLE_3" reason="Adjacent" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_2" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_3" link2="R_LOWER_WRIST" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_3" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_3" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_3" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_HAND_R_FINGER_KNUCKLE_3" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_LOWER_WRIST" link2="R_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_LOWER_WRIST" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_LOWER_WRIST" link2="R_UPPER_ARM_IN_SHOULDER" reason="Never" />
+    <disable_collisions link1="R_LOWER_WRIST" link2="R_UPPER_WRIST_PITCH" reason="Adjacent" />
+    <disable_collisions link1="R_SHOULDER" link2="R_UPPER_ARM" reason="Never" />
+    <disable_collisions link1="R_SHOULDER" link2="R_UPPER_ARM_IN_SHOULDER" reason="Adjacent" />
+    <disable_collisions link1="R_SHOULDER" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_SHOULDER" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_UPPER_ARM" link2="R_UPPER_ARM_IN_SHOULDER" reason="Adjacent" />
+    <disable_collisions link1="R_UPPER_ARM" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_UPPER_ARM" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_UPPER_ARM_IN_SHOULDER" link2="R_UPPER_WRIST_PITCH" reason="Never" />
+    <disable_collisions link1="R_UPPER_ARM_IN_SHOULDER" link2="R_UPPER_WRIST_YAW" reason="Never" />
+    <disable_collisions link1="R_UPPER_WRIST_PITCH" link2="R_UPPER_WRIST_YAW" reason="Adjacent" />
+</robot>

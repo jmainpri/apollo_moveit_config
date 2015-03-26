@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- This file makes it easy to include the settings for sensor managers -->  
+
+  <!-- Load the robot specific sensor manager; this sets the moveit_sensor_manager ROS parameter -->
+  <arg name="moveit_sensor_manager" default="apollo_robot" />
+
+  <!-- Launch kinect -->
+  <!-- <include file="$(find openni2_launch)/launch/openni2.launch" /> -->
+
+  <node pkg="tf" type="static_transform_publisher" name="kinect_link"
+        args="0 -0.08 -0.20 -1.59 0 3.14 /B_HEAD /camera_link 10" >
+	    <remap from="/tf" to="/tf" />
+  </node>
+
+  <!-- Lauch octomap server -->
+  <include file="$(find apollo_moveit_config)/launch/$(arg moveit_sensor_manager)_moveit_sensor_manager.launch" />
+  
+</launch>

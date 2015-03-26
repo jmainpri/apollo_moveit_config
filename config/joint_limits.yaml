@@ -1,0 +1,141 @@
+joint_limits:
+  L_HR:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  L_WAA:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_LF:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_WR:
+    has_velocity_limits: true
+    max_velocity: 3.1415926
+    has_acceleration_limits: true
+    max_acceleration: 0.62831852
+  L_RF2:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_MF:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  L_RF:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  L_SAA:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_MF2:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_SAA:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_LF2:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  L_LF2:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_SFE:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  L_FR:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  L_LF:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_WAA:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_FR:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  L_WR:
+    has_velocity_limits: true
+    max_velocity: 3.1415926
+    has_acceleration_limits: true
+    max_acceleration: 0.62831852
+  L_WFE:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  L_MF:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_HR:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_RF2:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  R_EB:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_WFE:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  L_EB:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  L_MF2:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
+  L_SFE:
+    has_velocity_limits: true
+    max_velocity: 1.9634
+    has_acceleration_limits: true
+    max_acceleration: 0.39268
+  R_RF:
+    has_velocity_limits: true
+    max_velocity: 3.27
+    has_acceleration_limits: true
+    max_acceleration: 0.654
